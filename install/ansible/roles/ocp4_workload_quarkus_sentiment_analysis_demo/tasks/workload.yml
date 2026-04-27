@@ -6,5 +6,11 @@
 - name: Install OpenShift Gitops
   ansible.builtin.include_tasks: openshift_gitops.yml
 
-- name: Install Mcp Demo Poc app
+
+- name: Install RHBK
+  ansible.builtin.include_tasks: rhbk.yml
+
+
+
+- name: Install Sentiment Analusis App
   ansible.builtin.include_tasks: application.yml

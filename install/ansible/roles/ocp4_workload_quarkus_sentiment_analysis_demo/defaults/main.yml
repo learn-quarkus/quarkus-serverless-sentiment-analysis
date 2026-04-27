@@ -133,7 +133,7 @@ ocp4_workload_quarkus_sentiment_analysis_demo_openshift_gitops_resource_customiz
   #     hs = {}
   #     hs.status = "Progressing"
   #     hs.message = ""
-  #     if obj.status ~= nil then
+  #     if obj.status ~= nil thenx
   #       if obj.status.health ~= nil then
   #         hs.status = obj.status.health.status
   #         hs.message = obj.status.health.message
@@ -150,89 +150,30 @@ ocp4_workload_quarkus_sentiment_analysis_demo_openshift_gitops_ignore_difference
 ocp4_workload_quarkus_sentiment_analysis_demo_amq_streams_enable_external_listener: true
 ocp4_workload_quarkus_sentiment_analysis_demo_openshift_ingress_secret_certs: ingress-certs
 
-# ------------------------------------------------
-# Red Hat Build Of Keycloak
-# ------------------------------------------------
 
-ocp4_workload_quarkus_sentiment_analysis_demo_rhbk_host: sso
-
-ocp4_workload_quarkus_sentiment_analysis_demo_rhbk_client_gateway_secret:
-  "{{ lookup('ansible.builtin.password', '/tmp/passwordfile-client-gateway', chars=['ascii_letters', 'digits'], length=32) }}"
-
-
-# ------------------------------------------------
-# Globex
-# ------------------------------------------------
-
-ocp4_workload_quarkus_sentiment_analysis_demo_globex_store_mcp_host: globex-store-mcp
-ocp4_workload_quarkus_sentiment_analysis_demo_globex_complaints_host: globex-complaints
-ocp4_workload_quarkus_sentiment_analysis_demo_globex_agent_host: globex-agent
-
-ocp4_workload_quarkus_sentiment_analysis_demo_routing_llm_model_name: "{{ routing_llm_model_name }}"
-ocp4_workload_quarkus_sentiment_analysis_demo_routing_llm_api_key: "{{ routing_llm_api_key }}"
-ocp4_workload_quarkus_sentiment_analysis_demo_routing_llm_base_url: "{{ routing_llm_base_url }}"
-
-ocp4_workload_quarkus_sentiment_analysis_demo_complaint_llm_model_name: "{{ complaint_llm_model_name }}"
-ocp4_workload_quarkus_sentiment_analysis_demo_complaint_llm_api_key: "{{ complaint_llm_api_key }}"
-ocp4_workload_quarkus_sentiment_analysis_demo_complaint_llm_base_url: "{{ complaint_llm_base_url }}"
-
-ocp4_workload_quarkus_sentiment_analysis_demo_order_llm_model_name: "{{ order_llm_model_name }}"
-ocp4_workload_quarkus_sentiment_analysis_demo_order_llm_api_key: "{{ order_llm_api_key }}"
-ocp4_workload_quarkus_sentiment_analysis_demo_order_llm_base_url: "{{ order_llm_base_url }}"
-
-
-# ------------------------------------------------
-# Globex Agent OIDC Setup to call MCP and Complaints service:
-# ------------------------------------------------
-ocp_workload_mcp_demo_internal_oidc_realm: internal
-ocp_workload_mcp_demo_agent_oidc_complaints_client_id: globex-agent-complaints-client
-ocp_workload_mcp_demo_agent_oidc_complaints_client_secret:
-  "{{ lookup('ansible.builtin.password', '/tmp/passwordfile-complaints-client-secret', chars=['ascii_letters', 'digits'], length=16) }}"
-
-ocp_workload_mcp_demo_globex_mcp_client_clientid: globex-mcp-client
-ocp_workload_mcp_demo_globex_mcp_client_clientsecret: 
-  "{{ lookup('ansible.builtin.password', '/tmp/passwordfile-globex-mcp-client-clientsecret', chars=['ascii_letters', 'digits'], length=16) }}"
-ocp_workload_mcp_demo_globex_mcp_client_clientscope: globex-mcp-client-scope
-ocp_workload_mcp_demo_globex_mcp_client_audience: globex-mcp-client
-
-ocp_workload_mcp_demo_globex_mcp_server_clientid: globex-mcp-server
-ocp_workload_mcp_demo_globex_mcp_server_clientsecret: 
-  "{{ lookup('ansible.builtin.password', '/tmp/passwordfile-globex-mcp-server-clientsecret', chars=['ascii_letters', 'digits'], length=16) }}"
-ocp_workload_mcp_demo_globex_mcp_server_clientscope: globex-mcp-server-scope
-ocp_workload_mcp_demo_globex_mcp_server_audience: globex-mcp-server
-
-
-ocp_workload_mcp_demo_globex_mcp_service_clientid: globex-mcp-service
-ocp_workload_mcp_demo_globex_mcp_service_clientsecret: 
-  "{{ lookup('ansible.builtin.password', '/tmp/passwordfile-globex-mcp-service-clientsecret', chars=['ascii_letters', 'digits'], length=16) }}"
-ocp_workload_mcp_demo_globex_mcp_service_clientscope: globex-mcp-service-scope
-ocp_workload_mcp_demo_globex_mcp_service_audience: globex-mcp-service
-
-
-# ------------------------------------------------
-# App of apps
-# ------------------------------------------------
-
-ocp4_workload_quarkus_sentiment_analysis_demo_app_application_name: mcp-demo-poc-app
-ocp4_workload_quarkus_sentiment_analysis_demo_app_application_namespace: openshift-gitops
-
-ocp4_workload_quarkus_sentiment_analysis_demo_app_namespace: openshift-gitops
-
-ocp4_workload_quarkus_sentiment_analysis_demo_app_gitops_repo: https://github.com/quarkus-mcp-demo/mcp-demo-poc.git
-ocp4_workload_quarkus_sentiment_analysis_demo_app_gitops_repo_tag: main
-ocp4_workload_quarkus_sentiment_analysis_demo_app_gitops_repo_path: install/helm/app-of-apps
-
-ocp4_workload_quarkus_sentiment_analysis_demo_app_gitops_minio_root_user: minio
-ocp4_workload_quarkus_sentiment_analysis_demo_app_gitops_minio_secret:
-  "{{ lookup('ansible.builtin.password', '/tmp/passwordfile-minio', chars=['ascii_letters', 'digits'], length=16) }}"
-
-
-
-
-ocp4_workload_quarkus_sentiment_analysis_globex_repoUrl: https://github.com/rh-cloud-architecture-workshop/helm.git
+ocp4_workload_quarkus_sentiment_analysis_globex_repoUrl: https://github.com/learn-quarkus/quarkus-serverless-sentiment-analysis.git
 ocp4_workload_quarkus_sentiment_analysis_globex_tag: main
-ocp4_workload_quarkus_sentiment_analysis_globex_path: globex
+ocp4_workload_quarkus_sentiment_analysis_globex_path: install/helm/globex
 
-ocp4_workload_quarkus_sentiment_analysis_serverless_repoUrl: https://github.com/rh-cloud-architecture-workshop/globex-sentiment-analysis-helm.git
-ocp4_workload_quarkus_sentiment_analysis_serverless_tag: ocp18
-ocp4_workload_quarkus_sentiment_analysis_serverless_path: globex-sentiment-analysis/sentiment-analysis
+ocp4_workload_quarkus_sentiment_analysis_serverless_repoUrl: https://github.com/learn-quarkus/quarkus-serverless-sentiment-analysis.git
+ocp4_workload_quarkus_sentiment_analysis_serverless_tag: main
+ocp4_workload_quarkus_sentiment_analysis_serverless_path: install/helm/globex-sentiment-analysis
+
+# ------------------------------------------------
+# Red Hat build of Keycloak
+# ------------------------------------------------
+
+ocp4_workload_quarkus_sentiment_analysis_rhbk_application_namespace: openshift-gitops
+ocp4_workload_quarkus_sentiment_analysis_rhbk_application_name: rhbk
+ocp4_workload_quarkus_sentiment_analysis_rhbk_namespace: rhsso
+ocp4_workload_quarkus_sentiment_analysis_rhbk_gitops_repo: https://github.com/learn-quarkus/quarkus-serverless-sentiment-analysis.git
+ocp4_workload_quarkus_sentiment_analysis_rhbk_gitops_repo_tag: main
+ocp4_workload_quarkus_sentiment_analysis_rhbk_gitops_repo_path: install/helm/globex-keycloak
+
+ocp4_workload_quarkus_sentiment_analysis_rhbk_cr_name: rhbk
+ocp4_workload_quarkus_sentiment_analysis_rhbk_external_access: false
+ocp4_workload_quarkus_sentiment_analysis_rhbk_host: sso
+ocp4_workload_quarkus_sentiment_analysis_rhbk_max_time_to_wait: 600000
+
+ocp4_workload_quarkus_sentiment_analysis_rhbk_realm: globex
+ocp4_workload_quarkus_sentiment_analysis_rhbk_web_gateway_client: globex-web-gateway
