@@ -1,0 +1,16 @@
+nameOverride: "kafka-source"
+
+kafka:
+  bootstrapServer:
+  secret: kafka-secret
+
+topics:
+  - globex.reviews
+  - reviews.moderated
+  - reviews.sentiment
+
+broker: globex-broker
+
+argocd:
+  enabled: true
+  syncwave: "-1"

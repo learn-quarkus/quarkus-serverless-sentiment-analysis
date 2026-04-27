@@ -1,0 +1,6 @@
+kafka-secret:
+  secret: kafka-secret
+
+knative-kafkasink:
+  kafka:
+    secret: kafka-secret

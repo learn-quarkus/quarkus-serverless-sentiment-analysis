@@ -1,0 +1,24 @@
+image:
+  repository: quay.io/globex-sentiment-analysis/sentiment-analysis-analyze-reviews
+  pullPolicy: IfNotPresent
+  tag: model-packaged
+
+nameOverride: ""
+fullnameOverride: ""
+
+podAnnotations:
+  autoscaling.knative.dev/min-scale: '0'
+
+resources:
+  limits:
+    memory: 6000Mi
+  requests:
+    memory: 1000Mi
+
+gunicorn:
+  threads: "4"
+  timeout: "180"
+
+cloudEvents:
+  source: reviews-sentiment
+  type: reviews-sentiment-event

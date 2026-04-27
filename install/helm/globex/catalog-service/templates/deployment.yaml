@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  annotations:
+    app.openshift.io/connects-to: |
+      [{"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.inventoryService.name }}"},{"apiVersion":"apps/v1","kind":"Deployment","name":"{{ .Values.catalogDb.name }}"}]
+  labels:
+    {{- include "catalog-service.labels" . | nindent 4 }}
+    app.openshift.io/runtime: spring
+  name: {{ include "catalog-service.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "catalog-service.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "catalog-service.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      serviceAccountName: {{ include "catalog-service.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image:  "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.containerPort }}
+              protocol: TCP
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            - name: JAVA_OPTS
+              value: -Dspring.profiles.active=openshift
+            - name: POSTGRESQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.catalogDb.secret.name }}
+                  key: database-name 
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://{{ .Values.catalogDb.name }}:5432/${POSTGRESQL_DATABASE}
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.catalogDb.secret.name }}
+                  key: database-user
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.catalogDb.secret.name }}
+                  key: database-password
+            - name: INVENTORY_URL
+              value: {{ .Values.inventoryService.name }}:8080
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
