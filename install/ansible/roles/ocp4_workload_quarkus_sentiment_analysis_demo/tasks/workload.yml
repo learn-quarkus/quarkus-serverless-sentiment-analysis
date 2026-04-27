@@ -1,11 +1,14 @@
 ---
 
-- name: User workload monitoring
-  ansible.builtin.include_tasks: user_workload_monitoring.yml
+# - name: User workload monitoring
+#   ansible.builtin.include_tasks: user_workload_monitoring.yml
 
-- name: Install OpenShift Gitops
-  ansible.builtin.include_tasks: openshift_gitops.yml
+# - name: Install OpenShift Gitops
+#   ansible.builtin.include_tasks: openshift_gitops.yml
 
+
+- name: Install Red Hat Build of Keycloak Operator
+  ansible.builtin.include_tasks: rhbk_operator.yml
 
 - name: Install RHBK
   ansible.builtin.include_tasks: rhbk.yml
@@ -17,26 +20,17 @@
 - name: Deploy Globex application
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'globex-application.yaml.j2') }}"
-  vars:
-    r_workload_quarkus_sentiment_analysis_globex_namespace: "globex-user"
-    r_workload_quarkus_sentiment_analysis_globex_mw_namespace: "globex-mw-user"
-
-
-- name: Deploy Globex application
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'globex-application.yaml.j2') }}"
+    definition: "{{ lookup('template', 'application/globex-application.yaml.j2') }}"
   vars:
     r_workload_quarkus_sentiment_analysis_globex_namespace: "globex-user"
     r_workload_quarkus_sentiment_analysis_globex_mw_namespace: "globex-mw-user"
 
 
 
-- name: Deploy Globex application
+- name: Deploy Sentiment Analysis application
   kubernetes.core.k8s:
     state: present
-    definition: "{{ lookup('template', 'serverless-application.yaml.j2') }}"
+    definition: "{{ lookup('template', 'application/serverless-application.yaml.j2') }}"
   vars:
     r_workload_quarkus_sentiment_analysis_globex_namespace: "globex-user"
     r_workload_quarkus_sentiment_analysis_globex_mw_namespace: "globex-mw-user"
