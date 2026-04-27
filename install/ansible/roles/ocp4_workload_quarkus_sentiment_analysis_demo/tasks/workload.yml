@@ -7,6 +7,9 @@
 #   ansible.builtin.include_tasks: openshift_gitops.yml
 
 
+- name: Install workshop.yml
+  ansible.builtin.include_tasks: workshop.yml
+  
 - name: Install Red Hat Build of Keycloak Operator
   ansible.builtin.include_tasks: rhbk_operator.yml
 

@@ -4,12 +4,12 @@
     state: present
     resource_definition: "{{ lookup('template', 'namespace.yaml.j2') }}"
   vars:
-    r_cloud_architecture_workshop_namespaces:
+    ocp4_workload_quarkus_sentiment_analysis_namespaces:
       - name: "globex-user"
-        managedByArgo: "{{ globex-gitops }}"
+        managedByArgo: "globex-gitops"
       - name: "globex-mw-user"
-        managedByArgo: "{{ globex-gitops }}"
-      - name: "{{ globex-gitops }}"
+        managedByArgo: "globex-gitops"
+      - name: "globex-gitops"
         managedByArgo: ""
   retries: 10
   delay: 30
@@ -19,12 +19,12 @@
     state: present
     resource_definition: "{{ lookup('template', 'rolebinding.yaml.j2') }}"
   vars:
-    r_cloud_architecture_workshop_bindings:
+    ocp4_workload_quarkus_sentiment_analysis_bindings:
       - namespace: "globex-user"
         role: "admin"
       - namespace: "globex-mw-user"
         role: "admin"
-      - namespace: "{{ globex-gitops }}"
+      - namespace: "globex-gitops"
         role: "admin"
   retries: 10
   delay: 30
@@ -39,7 +39,7 @@
     state: present
     resource_definition: "{{ lookup('template', 'rolebinding-argo.yaml.j2') }}"
   vars:
-    r_cloud_architecture_workshop_bindings_argo:
+    ocp4_workload_quarkus_sentiment_analysis_bindings_argo:
       - namespace: "globex-user"
         role: "admin"
       - namespace: "globex-mw-user"
@@ -47,10 +47,4 @@
   retries: 10
   delay: 30
 
-- name: Deploy Globex application
-  kubernetes.core.k8s:
-    state: present
-    definition: "{{ lookup('template', 'globex-application.yaml.j2') }}"
-  vars:
-    r_cloud_architecture_workshop_globex_namespace: "globex-user"
-    r_cloud_architecture_workshop_globex_mw_namespace: "globex-mw-user"
+

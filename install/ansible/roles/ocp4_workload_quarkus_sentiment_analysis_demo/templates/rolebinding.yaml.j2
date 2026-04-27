@@ -1,18 +1,16 @@
-{% for __user in r_cloud_architecture_workshop_users %}
-{% for __binding in r_cloud_architecture_workshop_bindings %}
+{% for __binding in ocp4_workload_quarkus_sentiment_analysis_bindings %}
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: '{{ __user }}-{{ __binding.role }}-{{ __binding.namespace | replace("user", __user) }}-namespace'
-  namespace: '{{ __binding.namespace | replace("user", __user) }}'
+  name: 'user{{ __binding.role }}-{{ __binding.namespace }}-namespace'
+  namespace: '{{ __binding.namespace}}'
 subjects:
 - kind: User
-  name: '{{ __user  }}'
-  namespace: '{{ __binding.namespace | replace("user", __user) }}'
+  name: 'user'
+  namespace: '{{ __binding.namespace }}'
 roleRef:
   kind: ClusterRole
   name: '{{ __binding.role }}'
   apiGroup: rbac.authorization.k8s.io
-{% endfor %}
 {% endfor %}

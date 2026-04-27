@@ -8,12 +8,10 @@ spec:
   generators:
   - list:
       elements:
-{% for n in range(1, ocp4_workload_quarkus_sentiment_analysis_user_count | int + 1 ) %}
-      - user: {{ ocp4_workload_quarkus_sentiment_analysis_user_prefix }}{{ n }}
-{% endfor %}
+      - user: user1
   template:
     metadata:
-      name: "{{ ocp4_workload_quarkus_sentiment_analysis_argo_application_name }}-{% raw %}{{ user }}{% endraw %}"
+      name: "globex-gitops"
       namespace: openshift-gitops
       finalizers:
       - resources-finalizer.argocd.argoproj.io
@@ -33,9 +31,9 @@ spec:
         path: {{ ocp4_workload_quarkus_sentiment_analysis_application_repo_path_gitops }}
         helm:
           values: |
-            name: {{ ocp4_workload_quarkus_sentiment_analysis_argo_application_name }}-user{% endraw %}
+            name: {{ ocp4_workload_quarkus_sentiment_analysis_argo_application_name }}-user
 
-            namespace: "{{ ocp4_workload_quarkus_sentiment_analysis_namespace_prefix }}-gitops-use{% endraw %}"
+            namespace: "globex-gitops-user"
  
             applicationSet:
               resources:
