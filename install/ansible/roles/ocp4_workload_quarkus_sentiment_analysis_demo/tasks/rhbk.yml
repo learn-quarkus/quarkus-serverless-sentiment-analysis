@@ -5,7 +5,7 @@
     state: present
     api_version: v1
     kind: Namespace
-    name: "{{ ocp4_workload_cloud_architecture_workshop_rhbk_namespace }}"
+    name: "{{ ocp4_workload_quarkus_sentiment_analysis_rhbk_namespace }}"
 
 - name: Deploy RHSSO Application
   kubernetes.core.k8s:
