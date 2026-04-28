@@ -1,21 +1,21 @@
 apiVersion: v1
 data:
   TRANSFORMERS_CACHE: /app/cache
-  bootstrap_servers: kafka-kafka-bootstrap.globex-mw.svc.cluster.local:9092
+  bootstrap_servers: kafka-kafka-bootstrap.globex-mw-user1.svc.cluster.local:9092
   bucket: globex-bucket
   ce_source: review-moderated
   ce_type: review-moderated-event
-  denied_reviews_sink: http://kafka-sink-ingress.knative-eventing.svc.cluster.local/sentiment-analysis/denied-reviews-sink
+  denied_reviews_sink: http://kafka-sink-ingress.knative-eventing.svc.cluster.local/globex-serverless/denied-reviews-sink
   good_language_topic: reviews.moderated
   influxdb-measurement: sentiment-measurement
   influxdb-token: 91XvhQY1nzme54HHzaRVlJUp8lJ2EoB8frQ7rksiZju3G5eAomPSBifL3oveHlAPiV8yDn4AmjmJ6fZA2ajXfQ==
   influxdb-url: http://influxdb.influxdb-project.svc.cluster.local:8086
   language_topic: reviews.sentiment
-  moderated_reviews_sink: http://kafka-sink-ingress.knative-eventing.svc.cluster.local/sentiment-analysis/moderated-reviews-sink
+  moderated_reviews_sink: http://kafka-sink-ingress.knative-eventing.svc.cluster.local/globex-serverless/moderated-reviews-sink
   not_good_language_topic: reviews.denied
   org: globex
   password: globex
-  reviews_sentiment_sink: http://kafka-sink-ingress.knative-eventing.svc.cluster.local/sentiment-analysis/reviews_sentiment_sink
+  reviews_sentiment_sink: http://kafka-sink-ingress.knative-eventing.svc.cluster.local/globex-serverless/reviews-sink
   sasl_mechanism: SCRAM-SHA-512
   security_protocol: SASL_PLAINTEXT
   topic: reviews.sentiment
