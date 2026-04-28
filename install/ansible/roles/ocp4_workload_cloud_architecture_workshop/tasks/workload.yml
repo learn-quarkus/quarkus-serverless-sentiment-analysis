@@ -1,0 +1,25 @@
+---
+
+# - name: Install OpenShift Gitops
+#   ansible.builtin.include_tasks: openshift_gitops.yml
+
+# - name: Install AMQ Streams operator
+#   ansible.builtin.include_tasks: amq_streams_operator.yml
+
+# - name: Install Red Hat Build of Keycloak Operator
+#   ansible.builtin.include_tasks: rhbk_operator.yml
+
+# - name: Install OpenShift Serverless
+#   ansible.builtin.include_tasks: serverless.yml
+
+# - name: Install RHBK
+#   ansible.builtin.include_tasks: rhbk.yml
+
+- name: Install Workshop
+  ansible.builtin.include_tasks: workshop.yml
+
+# - name: Install Workshop Deployer
+#   ansible.builtin.include_tasks: workshop_deployer.yml
+
+# - name: Install Showroom
+#   ansible.builtin.include_tasks: showroom.yml
